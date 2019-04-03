@@ -39,14 +39,12 @@ class ApplicationController < Sinatra::Base
     if params[:username] == "" || params[:password] == ""
       redirect '/failure'
     else
-      if @user && @user.authenticate(params[:password])
-        session[:user_id] = @user.id
-        redirect '/account'
-      else
-        redirect '/failure'
-      end
+      @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect '/account'
     end
   end
+
 
   get "/failure" do
     erb :failure
